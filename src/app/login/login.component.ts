@@ -1,22 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-
+import { NgFor } from "@angular/common";
+import { Component, OnInit } from "@angular/core";
+import { NgForm } from "@angular/forms";
 
 @Component({
-    selector: 'login',
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.css'],
-    standalone: false
+  selector: "login",
+  templateUrl: "./login.component.html",
+  styleUrls: ["./login.component.css"],
+  standalone: false,
 })
 export class LoginComponent implements OnInit {
+  constructor() {}
 
+  ngOnInit() {}
 
-  constructor() {
+  login(form: NgForm): void {
+    if (form.invalid) {
+      return;
+    }
 
-
+    console.log(form);
   }
-
-  ngOnInit() {
-
-  }
-
 }
