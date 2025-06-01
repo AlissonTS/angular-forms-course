@@ -1,27 +1,53 @@
 <mat-card class="login-page">
   <mat-card-title>Login (Reactive)</mat-card-title>
   <mat-card-content>
-
-    <form class="login-form data-form">
-
+    <form [formGroup]="form" class="login-form data-form" (ngSubmit)="login()">
       <mat-form-field>
+        <input
+          matInput
+          type="email"
+          name="email"
+          placeholder="Email"
+          formControlName="email"
+        />
 
-        <input matInput type="email" name="email"
-               placeholder="Email">
-
+        @if (form.controls.email?.errors?.required &&
+        (form.controls.email?.dirty || form.controls.email?.touched)) {
+        <mat-error>Email is required</mat-error>
+        } @else if (form.controls.email?.errors?.email &&
+        (form.controls.email?.dirty || form.controls.email?.touched)) {
+        <mat-error>Email is invalid</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field>
+        <input
+          matInput
+          type="password"
+          placeholder="Password"
+          formControlName="password"
+        />
 
-        <input matInput type="password" placeholder="Password">
-
+        @if (form.controls.password?.errors?.required &&
+        (form.controls.password?.dirty || form.controls.password?.touched)) {
+        <mat-error>Password is required</mat-error>
+        } @else if (form.controls.password?.errors?.passwordStrength &&
+        (form.controls.password?.dirty || form.controls.password?.touched)) {
+        <mat-error
+          >Your password must have lowercase, uppercase and numeric
+          characters.</mat-error
+        >
+        }
       </mat-form-field>
 
-      <button mat-raised-button color="primary">
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="form.invalid"
+      >
         Login
       </button>
-
     </form>
-
   </mat-card-content>
 </mat-card>
