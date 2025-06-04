@@ -1,0 +1,73 @@
+<div [formGroup]="form">
+  <!-- <address-form legend="Address" formControlName="address"></address-form> -->
+
+  <mat-form-field>
+    <input matInput placeholder="Course Title" formControlName="title" #title />
+
+    <mat-hint align="end"> {{ title.value?.length || 0 }} / 50</mat-hint>
+
+    @if (form.controls.title?.errors?.required && (form.controls.title?.dirty ||
+    form.controls.title?.touched)) {
+    <mat-error>Title is required.</mat-error>
+    } @else if (form.controls.title?.errors?.titleExists &&
+    (form.controls.title?.dirty || form.controls.title?.touched)) {
+    <mat-error>This title is already in use.</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-select placeholder="Select a category" formControlName="category">
+      @for (category of courseCategories$ | async; track category.id) {
+      <mat-option [value]="category.code">{{
+        category.description
+      }}</mat-option>
+      }
+    </mat-select>
+
+    @if (form.controls.category?.errors?.required &&
+    (form.controls.category?.dirty || form.controls.category?.touched)) {
+    <mat-error>Category is required.</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field>
+    <input
+      matInput
+      placeholder="Release date"
+      formControlName="releaseAt"
+      [matDatepicker]="picker"
+    />
+
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-checkbox color="primary" formControlName="downloadsAllowed"
+    >Downloads Allowed?</mat-checkbox
+  >
+
+  <mat-form-field appearance="outline">
+    <textarea
+      matInput
+      placeholder="Description"
+      formControlName="longDescription"
+    ></textarea>
+
+    @if (form.controls.longDescription?.errors?.required &&
+    (form.controls.longDescription?.dirty ||
+    form.controls.longDescription?.touched)) {
+    <mat-error>Description is required.</mat-error>
+    } @else if (form.controls.longDescription?.errors?.minlength &&
+    (form.controls.longDescription?.dirty ||
+    form.controls.longDescription?.touched)) {
+    <mat-error
+      >Your description must have
+      {{ form.controls.longDescription?.errors?.minlength.requiredLength }}
+      characters, but only has
+      {{
+        form.controls.longDescription?.errors?.minlength.actualLength
+      }}.</mat-error
+    >
+    }
+  </mat-form-field>
+</div>

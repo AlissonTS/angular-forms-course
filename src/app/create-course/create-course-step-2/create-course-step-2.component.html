@@ -1,0 +1,40 @@
+<div [formGroup]="form">
+  <mat-radio-group formControlName="courseType">
+    <mat-radio-button value="free">Free</mat-radio-button>
+    <mat-radio-button value="premium">Premium</mat-radio-button>
+  </mat-radio-group>
+
+  <file-upload
+    requiredFileType="image/png"
+    formControlName="thumbnail"
+  ></file-upload>
+
+  <mat-form-field>
+    <input matInput type="number" placeholder="Price" formControlName="price" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Promotional period</mat-label>
+
+    <mat-date-range-input [rangePicker]="promotionPicker">
+      <input
+        matStartDate
+        placeholder="Start date"
+        formControlName="promoStartAt"
+      />
+
+      <input matEndDate placeholder="End date" formControlName="promoEndAt" />
+    </mat-date-range-input>
+
+    <mat-datepicker-toggle
+      matSuffix
+      [for]="promotionPicker"
+    ></mat-datepicker-toggle>
+
+    <mat-date-range-picker #promotionPicker></mat-date-range-picker>
+
+    @if (form.errors?.promotionalPeriod && form.dirty) {
+    <mat-error>The start date must be before the end date.</mat-error>
+    }
+  </mat-form-field>
+</div>
